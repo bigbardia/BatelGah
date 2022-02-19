@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'headers.html' %}
+    <title>BatelGah</title>
+    <style>
+        body {
+            background-color: aqua;
+        }
+
+        .chat-box {
+               position: fixed; 
+               bottom: 1rem;
+               right: 1rem;
+        }
+
+        textarea {
+            resize: none;
+            width:100%;
+            margin:5px 0;
+            padding:3px;
+        }
+
+        .chat-class {
+            
+            float: left;
+            margin: 50px;
+        }
+
+
+    </style>
+</head>
+<body>
+    {% include 'nav.html' %}
+    
+
+
+    <div id='chat-place' class="chat-class">
+        {% for obj in chats.all %}
+        
+        
+        <h5><a target="_blank"  href="{{obj.user.get_absoloute_url}}" style="color: red;"> {{obj.user.username}}</a></h5>
+        {% if obj.status %}
+        <small>
+        <p>&nbsp; &nbsp; &nbsp; {{obj.user.status}}  </p>
+        </small>
+        {% else %}
+        <small>
+            <p>&nbsp; &nbsp; &nbsp;   </p>
+        </small>
+        {% endif %}
+        <pre><h6>{{obj.text}}</h6></pre>
+        <p>{{ obj.timestamp}}</p>
+        <br>
+        <br>
+
+        {% endfor %}
+
+
+    </div>
+
+
+
+
+
+        <section class="chat-box">
+        <div>
+            <form method="post"> {% csrf_token %}
+                    {{form}}
+                    <button type="button" id ='submit' class="btn btn-primary">Send</button>
+            </form>
+        </div>
+        </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        function GetMessages(){
+                $.ajax({
+
+                    url : "{% url 'main' %}",
+                    type : "get",
+                    success : function(response){
+                    
+                        if (Object.keys(response).length !== 0){
+                            
+            
+                            
+                            for (key in response){
+                                var text = response[key]["text"]
+                                var timestamp  = response[key]["timestamp"]
+                                var username = response[key]["user"]["username"]
+                                var status = response[key]["user"]["status"]
+                                var profile_url = response[key]["url"]
+                                if (status === null){
+                                    status = "";
+                                }
+            
+                                $("#chat-place").append(
+                                    `<h5><a target="_blank"  href = '${profile_url}' style = 'color : red;'> ${username}</a></h5> <small> <p> &nbsp; &nbsp; &nbsp; ${status} </p></small> <pre><h6>${text}</h6></pre> <p> ${timestamp} </p> <br><br>`
+                                );
+                                
+                                
+                            }
+                        }
+                    }
+                           
+                });
+                setTimeout("GetMessages()" , 500);
+            }
+
+        $(document).ready(function(){
+            
+            var csrf = $("input[name=csrfmiddlewaretoken").val();
+            $(".btn").click(function(){
+            
+                
+                
+                $.ajax({
+                    url : "{% url 'main' %}",
+                    type : "post",
+                    data : {
+                        chat : $("#id_text").val(),
+                        csrfmiddlewaretoken : csrf,
+                    },
+                });
+            
+                
+                document.getElementById("id_text").value="";
+            });
+            
+
+            setTimeout("GetMessages()" , 500);
+        });
+        
+    </script>
+</body>
+</html>
+

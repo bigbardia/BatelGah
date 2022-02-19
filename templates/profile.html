@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'headers.html' %}
+    
+    <title>MyProfile</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+
+    </style>
+    
+</head>
+<body>
+    {% include 'nav.html' %}
+
+    <form method="post">{% csrf_token %}
+        
+        <div class = 'form-group'>
+            {% for field in form %}
+                {{field.label}}
+                <br>
+                {{field}}
+                <br>
+            {%endfor%}
+        </div>
+        
+        <br>
+
+
+        <button type="submit" class="btn btn-primary">Edit!</button>
+    </form>
+
+
+
+    <br>
+    {% if messages %}
+        {%for msg in messages%}
+            <p class = 'message'>{{msg}}</p>
+        {% endfor %}
+    {%endif%}
+
+    <form method='post'> {% csrf_token %}
+        <div class='form-group'>
+            <button type="submit" name="logout" value="logout" style="color: red;">Logout :(</button>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'headers.html' %}
+    
+    <title>Register!</title>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+{% include 'nav.html' %}
+
+<form method="post"> {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+      {{field.label}}
+      <br>
+      {{field}}
+    </div>
+    {%endfor%}
+    <br>
+    <button type="submit" class="btn btn-primary">submit!</button>
+    <p>already have an account?</p>
+    <p><a href="{% url 'login' %}">login</a></p>
+  </form>
+
+
+
+ {% for field in form %}
+    {% for error in field.errors %}
+        <b><p style="color : red;">
+                {{error}}
+        </p></b>
+    {% endfor %}
+{% endfor %}
+
+{% for error in form.non_field_errors %}
+    <b><p style="color: red;">
+        {{error}}
+    </p></b>
+{% endfor %}
+
+
+
+
+{% if messages %}
+    {% for msg in messages %}
+        <p class ='message'>{{msg}}</p>
+    {% endfor %}
+{%endif%}
+
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% include 'headers.html' %}
+    <title>{{user.email}}</title>
+    
+
+</head>
+<body>
+    {% include 'nav.html' %}
+
+    <table class="table" class= "m">
+    
+        <tbody>
+          <tr>
+            <th scope="row">Email</th>
+            <td>{{user.email}}</td>
+          </tr>
+
+          <tr>
+            <th scope="row">Username</th>
+            <td>{{user.username}}</td>
+          </tr>
+
+          <tr>
+            <th scope="row">About</th>
+            <td>
+                <pre>
+                {{user.about}}
+                </pre>
+            </td>
+          </tr>
+          
+          <tr>
+            <th scope="row">Status</th>
+            <td>{{user.status}}</td>
+          </tr>
+
+          <tr>
+            <th scope="row">Date Joined</th>
+            <td>{{user.date_joined}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+
+</body>
+</html>

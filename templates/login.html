@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'headers.html' %}
+    <title>Login!</title>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+{% include "nav.html" %}
+<form method="post"> {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+      {{field.label}}
+      <br>
+      {{field}}
+    </div>
+    {%endfor%}
+    <br>
+    <button type="submit" class="btn btn-primary">submit!</button>
+    <p>don't have an account?</p>
+    <p><a href="{% url 'register' %}">register</a></p>
+  </form>
+
+
+    {% if messages %}
+    {% for msg in messages %}
+        <p style="color: red;">
+            {{msg}}
+        </p>
+    {%endfor%}
+    {%endif%}
+
+</body>
+</html>

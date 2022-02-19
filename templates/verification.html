@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'headers.html' %}
+    <title>Verification</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <form method = 'post'> {% csrf_token %}
+        <div class ='form-group'>
+
+        {{form.token.label}}
+        <br>
+        {{form.token}}
+        <button type="submit" class="btn btn-primary">submit!</button>
+        </div>
+    </form>
+
+    {% if messages %}
+    {% for msg in messages %}
+        <p class = 'message'>{{msg}}</p>
+    {% endfor %}
+    {% endif %}
+
+</body>
+</html>
