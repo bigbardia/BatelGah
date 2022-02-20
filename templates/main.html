@@ -40,7 +40,7 @@
         
         
         <h5><a target="_blank"  href="{{obj.user.get_absoloute_url}}" style="color: red;"> {{obj.user.username}}</a></h5>
-        {% if obj.status %}
+        {% if obj.user.status %}
         <small>
         <p>&nbsp; &nbsp; &nbsp; {{obj.user.status}}  </p>
         </small>
@@ -82,7 +82,7 @@
                     success : function(response){
                     
                         if (Object.keys(response).length !== 0){
-                            
+
             
                             
                             for (key in response){
@@ -98,6 +98,8 @@
                                 $("#chat-place").append(
                                     `<h5><a target="_blank"  href = '${profile_url}' style = 'color : red;'> ${username}</a></h5> <small> <p> &nbsp; &nbsp; &nbsp; ${status} </p></small> <pre><h6>${text}</h6></pre> <p> ${timestamp} </p> <br><br>`
                                 );
+                                window.scrollTo(0,document.body.scrollHeight);
+
                                 
                                 
                             }
@@ -109,6 +111,8 @@
             }
 
         $(document).ready(function(){
+            window.scrollTo(0,document.body.scrollHeight);
+
             
             var csrf = $("input[name=csrfmiddlewaretoken").val();
             $(".btn").click(function(){
