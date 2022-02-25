@@ -26,11 +26,13 @@
             float: left;
             margin: 50px;
         }
+        
 
 
     </style>
 </head>
 <body>
+    {% load crispy_forms_tags %}
     {% include 'nav.html' %}
     
 
@@ -49,7 +51,7 @@
             <p>&nbsp; &nbsp; &nbsp;   </p>
         </small>
         {% endif %}
-        <pre><h6>{{obj.text}}</h6></pre>
+        {{obj.text|safe}}
         <p>{{ obj.timestamp}}</p>
         <br>
         <br>
@@ -66,13 +68,15 @@
         <section class="chat-box">
         <div>
             <form method="post"> {% csrf_token %}
-                    {{form}}
+                    {{form.media}}
+                    {{form|crispy}}
                     <button type="button" id ='submit' class="btn btn-primary">Send</button>
             </form>
         </div>
         </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="js/Lib/CKEdit/ckeditor.js"></script>
     <script type="text/javascript">
         function GetMessages(){
                 $.ajax({
@@ -96,7 +100,7 @@
                                 }
             
                                 $("#chat-place").append(
-                                    `<h5><a target="_blank"  href = '${profile_url}' style = 'color : red;'> ${username}</a></h5> <small> <p> &nbsp; &nbsp; &nbsp; ${status} </p></small> <pre><h6>${text}</h6></pre> <p> ${timestamp} </p> <br><br>`
+                                    `<h5><a target="_blank"  href = '${profile_url}' style = 'color : red;'> ${username}</a></h5> <small> <p> &nbsp; &nbsp; &nbsp; ${status} </p></small> ${text} <p> ${timestamp} </p> <br><br>`
                                 );
                                 window.scrollTo(0,document.body.scrollHeight);
 
@@ -112,24 +116,29 @@
 
         $(document).ready(function(){
             window.scrollTo(0,document.body.scrollHeight);
-
+            
             
             var csrf = $("input[name=csrfmiddlewaretoken").val();
             $(".btn").click(function(){
             
                 
+                let content = CKEDITOR.instances["id_text"].getData();
+
                 
+                
+                console.log(content)
                 $.ajax({
                     url : "{% url 'main' %}",
                     type : "post",
                     data : {
-                        chat : $("#id_text").val(),
+                        chat : content,
                         csrfmiddlewaretoken : csrf,
                     },
                 });
             
                 
-                document.getElementById("id_text").value="";
+                CKEDITOR.instances["id_text"].setData("");
+
             });
             
 

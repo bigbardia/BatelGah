@@ -52,7 +52,7 @@ class ChatMain(LoginRequiredMixin , View):
             return render(request , "main.html" , context)
 
     def post(self , request):
-
+        print(request.POST["chat"])
         chat = Chat(text = request.POST["chat"] , user = request.user)
         chat.save()
         return HttpResponse("")

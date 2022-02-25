@@ -26,7 +26,12 @@ INSTALLED_APPS = [
     'chat',
     'account',
     'rest_framework',
+    'crispy_forms',
+    'ckeditor',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

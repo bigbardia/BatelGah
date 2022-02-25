@@ -1,8 +1,12 @@
 from .models import Chat
 from django import forms
+from ckeditor.widgets import CKEditorWidget
 
 
 class ChatForm(forms.ModelForm):
+
+    text = forms.CharField(widget=CKEditorWidget() , label="Message:") 
+
 
     class Meta:
         model = Chat
