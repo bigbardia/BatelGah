@@ -34,8 +34,6 @@
 <body>
     {% load crispy_forms_tags %}
     {% include 'nav.html' %}
-    
-
 
     <div id='chat-place' class="chat-class">
         {% for obj in chats.all %}
@@ -76,7 +74,6 @@
         </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="js/Lib/CKEdit/ckeditor.js"></script>
     <script type="text/javascript">
         function GetMessages(){
                 $.ajax({
@@ -125,8 +122,6 @@
                 let content = CKEDITOR.instances["id_text"].getData();
 
                 
-                
-                console.log(content)
                 $.ajax({
                     url : "{% url 'main' %}",
                     type : "post",
